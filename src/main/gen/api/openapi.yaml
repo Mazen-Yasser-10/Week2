@@ -1,0 +1,178 @@
+openapi: 3.0.1
+info:
+  title: User Management API
+  version: 1.0.0
+servers:
+- url: /
+paths:
+  /api/users:
+    get:
+      parameters:
+      - description: Filter by username
+        explode: true
+        in: query
+        name: username
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: Filter by role
+        explode: true
+        in: query
+        name: role
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: Filter by status (Active/Inactive)
+        explode: true
+        in: query
+        name: status
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          description: List of users
+      summary: Get all users with filters
+      x-accepts:
+      - application/json
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+        required: true
+      responses:
+        "201":
+          description: User created
+      summary: Create a new user
+      x-content-type: application/json
+      x-accepts:
+      - application/json
+  /api/users/{id}:
+    delete:
+      parameters:
+      - description: User ID
+        explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          description: User deleted
+      summary: Delete a user
+      x-accepts:
+      - application/json
+    get:
+      parameters:
+      - description: User ID
+        explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          description: User details
+      summary: Get user details
+      x-accepts:
+      - application/json
+    put:
+      parameters:
+      - description: User ID
+        explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+        required: true
+      responses:
+        "200":
+          description: User updated
+      summary: Update a user
+      x-content-type: application/json
+      x-accepts:
+      - application/json
+  /api/users/{id}/activated:
+    put:
+      parameters:
+      - description: User ID
+        explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          description: User activated
+      summary: Activate a user
+      x-accepts:
+      - application/json
+  /api/users/{id}/deactivate:
+    put:
+      parameters:
+      - description: User ID
+        explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          description: User deactivated
+      summary: Deactivate a user
+      x-accepts:
+      - application/json
+components:
+  schemas:
+    User:
+      example:
+        password: password
+        role: role
+        gender: gender
+        mobileNumber: mobileNumber
+        fullName: fullName
+        id: 0
+        email: email
+        username: username
+        status: status
+      properties:
+        id:
+          type: integer
+        username:
+          type: string
+        password:
+          type: string
+        email:
+          type: string
+        fullName:
+          type: string
+        mobileNumber:
+          type: string
+        role:
+          type: string
+        gender:
+          type: string
+        status:
+          type: string
+      type: object
+
